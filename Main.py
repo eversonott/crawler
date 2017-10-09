@@ -12,6 +12,18 @@ class LinkParser(HTMLParser):
                     newUrl = parse.urljoin(self.baseUrl, value)
                     self.links = self.links + [newUrl]
 
+    def links(self,url):
+        self.links = []
+        self.baseUrl = url
+        response = urlopen(url)
+        if response.getheader('Content-Type') == 'text/html':
+            htmlBytes = response.read()
+            htmlString = htmlBytes.decode("utf-8")
+            self.feed(htmlString)
+            return self.links
+        else:
+            return []
+
     def getLinks(self, url):
         self.links = []
         self.baseUrl = url
@@ -49,8 +61,35 @@ def spider(url, word, maxPages):
             print("Word never found")
 
 
-spider("https://www.google.com", "a", 4000)
-#end = "https://www.google.com"
 
-#obj = LinkParser()
-#print(obj.getLinks(end))
+def processa_pagina(lista):
+
+    for x in range(0, len(lista)):
+        parser = LinkParser()
+        links = parser.links(lista[0])
+        lista.extend(links)
+        lista.remove(lista[0])
+
+        print(len(lista))
+        print(lista)
+        #processa_pagina(lista)
+
+
+#spider("https://www.google.com", "a", 4000)
+
+
+end = "https://www.dreamhost.com"
+lista = []
+lista.append(end)
+
+parser = LinkParser()
+links = parser.links(lista[0])
+lista.extend(links)
+lista.remove(lista[0])
+print(lista)
+print(len(lista))
+
+processa_pagina(lista)
+
+print("depois do processo")
+print(len(lista))
