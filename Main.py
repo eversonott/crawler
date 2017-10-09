@@ -93,3 +93,4 @@ processa_pagina(lista)
 
 print("depois do processo")
 print(len(lista))
+
