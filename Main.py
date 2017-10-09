@@ -50,6 +50,7 @@ def spider(url, word, maxPages):
 
 
 spider("https://www.google.com", "a", 4000)
-end = "https://www.google.com"
-obj = LinkParser()
-print(obj.getLinks(end))
+#end = "https://www.google.com"
+
+#obj = LinkParser()
+#print(obj.getLinks(end))
